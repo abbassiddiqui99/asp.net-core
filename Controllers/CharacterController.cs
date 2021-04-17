@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DOTNET_RPG.Models;
+using DOTNET_RPG.Services.CharacterServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DOTNET_RPG.Controllers
@@ -14,6 +15,13 @@ namespace DOTNET_RPG.Controllers
             new Character(),
             new Character { Id = 1, Name = "Sam"},
         };
+        private readonly ICharacterServices _characterService;
+
+        public CharacterController(ICharacterServices characterService)
+        {
+            _characterService = characterService;
+
+        }
 
         [HttpGet("GetAll")]
         public IActionResult Get()
@@ -21,7 +29,7 @@ namespace DOTNET_RPG.Controllers
             return Ok(characters);
         }
         [HttpGet("{id}")]
-         public IActionResult GetSingle(int id)
+        public IActionResult GetSingle(int id)
         {
             return Ok(characters.FirstOrDefault(c => c.Id == id));
         }
